@@ -9,7 +9,7 @@ A modern full-stack e-commerce platform built with React, TypeScript, Node.js, E
 </p>
 
 <p align="center">
-<a href="https://auramart-8d8t.onrender.com">🌐 Live Demo</a> •
+<a href="https://auramart-5dcv.onrender.com/">🌐 Live Demo</a> •
 <a href="https://github.com/keshabthapa2062/AuraMart">📂 Repository</a>
 </p>
 
@@ -273,7 +273,7 @@ npm start
 
 # 🌐 Live Demo
 
-https://auramart-8d8t.onrender.com
+https://auramart-5dcv.onrender.com/
 
 ---
 
