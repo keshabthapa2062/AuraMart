@@ -1,4 +1,7 @@
-import nodemailer from 'nodemailer';
+import dns from "dns";
+import nodemailer from "nodemailer";
+
+dns.setDefaultResultOrder("ipv4first");
 
 function getTransporter() {
   const user = process.env.GMAIL_USER || process.env.SMTP_USER;
@@ -11,17 +14,17 @@ function getTransporter() {
   }
 
   return nodemailer.createTransport({
-    host,
-    port,
-    secure: port === 465,
-    auth: {
-      user,
-      pass,
-    },
-    tls: {
-      rejectUnauthorized: false
-    }
-  });
+  host,
+  port,
+  secure: port === 465,
+  auth: {
+    user,
+    pass,
+  },
+  connectionTimeout: 30000,
+  greetingTimeout: 30000,
+  socketTimeout: 30000,
+});
 }
 
 export async function sendOtpEmail(toEmail: string, otpCode: string): Promise<boolean> {
