@@ -1,31 +1,22 @@
 import dns from "dns";
 import nodemailer from "nodemailer";
-import { promisify } from "util";
 
-const resolve4 = promisify(dns.resolve4);
+dns.setDefaultResultOrder("ipv4first");
 
-async function getTransporter() {
+function getTransporter() {
   const user = process.env.GMAIL_USER || process.env.SMTP_USER;
   const pass = process.env.GMAIL_APP_PASSWORD || process.env.SMTP_PASS;
+  const host = process.env.SMTP_HOST || "smtp.gmail.com";
+  const port = parseInt(process.env.SMTP_PORT || "587", 10);
 
-  if (!user || !pass) {
-    return null;
-  }
-
-  const [ipv4] = await resolve4("smtp.gmail.com");
+  if (!user || !pass) return null;
 
   return nodemailer.createTransport({
-    host: ipv4,
-    port: 587,
+    host,
+    port,
     secure: false,
     requireTLS: true,
-    auth: {
-      user,
-      pass,
-    },
-    tls: {
-      servername: "smtp.gmail.com",
-    },
+    auth: { user, pass },
     connectionTimeout: 30000,
     greetingTimeout: 30000,
     socketTimeout: 30000,
