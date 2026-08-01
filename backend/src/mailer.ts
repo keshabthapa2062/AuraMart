@@ -7,15 +7,18 @@ function getTransporter() {
   const user = process.env.GMAIL_USER || process.env.SMTP_USER;
   const pass = process.env.GMAIL_APP_PASSWORD || process.env.SMTP_PASS;
   const host = process.env.SMTP_HOST || "smtp.gmail.com";
-  const port = parseInt(process.env.SMTP_PORT || "587", 10);
+  const port = parseInt(process.env.SMTP_PORT || "465", 10); 
 
   if (!user || !pass) return null;
+
+
+  const isSecure = port === 465;
 
   return nodemailer.createTransport({
     host,
     port,
-    secure: false,
-    requireTLS: true,
+    secure: isSecure, 
+    family: 4, 
     auth: { user, pass },
     connectionTimeout: 30000,
     greetingTimeout: 30000,
